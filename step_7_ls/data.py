@@ -8,7 +8,7 @@ Y = []
 
 t0 = time.time()
 
-with open('data/fer2013.csv') as f:
+with open('fer2013/fer2013.csv') as f:
     reader = csv.reader(f)
     header = next(reader)
     for row in reader:

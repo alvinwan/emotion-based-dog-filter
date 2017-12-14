@@ -19,33 +19,58 @@ Y_oh_train, Y_oh_test = one_hot(Y_train), one_hot(Y_test)
 t1 = time.time()
 print('Finished loading data:', t1 - t0)
 
-# featurize
-W = np.random.normal(size=(X_train.shape[1], 2304))
-A_train, A_test = X_train.dot(W), X_test.dot(W)
 
-t2 = time.time()
-print('Finished stacking data:', t2 - t1)
+ols_train_accuracies = []
+ols_test_accuracies = []
+ridge_train_accuracies = []
+ridge_test_accuracies = []
 
-ATA, ATy = A_train.T.dot(A_train), A_train.T.dot(Y_oh_train)
-I = np.eye(ATA.shape[0])
-reg = 1e10
-w = np.linalg.inv(ATA).dot(ATy)
-w_ridge = np.linalg.inv(ATA + reg * I).dot(ATy)
 
-t3 = time.time()
-print('Finished solving:', t3 - t2)
+def evaluate(A, Y, w):
+    Yhat = np.argmax(A.dot(w), axis=1)
+    return float(np.sum(Yhat == Y)) / Y.shape[0]
 
-# ols
-Yhat_train = np.argmax(A_train.dot(w), axis=1)
-print('(ols) Train Accuracy:', float(np.sum(Yhat_train == Y_train)) / Y_train.shape[0])
-Yhat_test = np.argmax(A_test.dot(w), axis=1)
-print('(ols) Test Accuracy:', float(np.sum(Yhat_test == Y_test)) / Y_test.shape[0])
+ds = [10, 50, 100, 250, 500, 750, 1000, 1250, 1500, 1750, 2000, 2304]
 
-# ridge
-Yhat_train = np.argmax(A_train.dot(w_ridge), axis=1)
-print('(ridge) Train Accuracy:', float(np.sum(Yhat_train == Y_train)) / Y_train.shape[0])
-Yhat_test = np.argmax(A_test.dot(w_ridge), axis=1)
-print('(ridge) Test Accuracy:', float(np.sum(Yhat_test == Y_test)) / Y_test.shape[0])
+for d in ds:
 
-t4 = time.time()
-print('Total time:', t4 - t0)
+    W = np.random.normal(size=(X_train.shape[1], d))
+    A_train, A_test = X_train.dot(W), X_test.dot(W)
+
+    t2 = time.time()
+    print('Finished stacking data:', t2 - t1)
+
+    ATA, ATy = np.ascontiguousarray(A_train.T.dot(A_train).astype(float)), A_train.T.dot(Y_oh_train)
+    I = np.eye(ATA.shape[0])
+    reg = 1e10
+    w = np.linalg.inv(ATA).dot(ATy)
+    w_ridge = np.linalg.inv(ATA + reg * I).dot(ATy)
+
+    t3 = time.time()
+    print('Finished solving:', t3 - t2)
+
+    # ols
+    ols_train_accuracy = evaluate(A_train, Y_train, w)
+    ols_train_accuracies.append(ols_train_accuracy)
+    print('(ols) Train Accuracy:', ols_train_accuracy)
+    ols_test_accuracy = evaluate(A_test, Y_test, w)
+    ols_test_accuracies.append(ols_test_accuracy)
+    print('(ols) Test Accuracy:', ols_test_accuracy)
+
+    # ridge
+    ridge_train_accuracy = evaluate(A_train, Y_train, w_ridge)
+    ridge_train_accuracies.append(ridge_train_accuracy)
+    print('(ridge) Train Accuracy:', ridge_train_accuracy)
+    ridge_test_accuracy = evaluate(A_test, Y_test, w_ridge)
+    ridge_test_accuracies.append(ridge_test_accuracy)
+    print('(ridge) Test Accuracy:', ridge_test_accuracy)
+
+    t4 = time.time()
+    print('Total time:', t4 - t0)
+
+
+with open('results.txt', 'w') as f:
+    f.write('ols,train,%s\n' % ' '.join(map(str, ols_train_accuracies)))
+    f.write('ols,test,%s\n' % ' '.join(map(str, ols_test_accuracies)))
+    f.write('ridge,train,%s\n' % ' '.join(map(str, ridge_train_accuracies)))
+    f.write('ridge,test,%s' % ' '.join(map(str, ridge_test_accuracies)))
