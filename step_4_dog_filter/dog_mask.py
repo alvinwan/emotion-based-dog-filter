@@ -59,11 +59,11 @@ def main():
         # Add mask to faces
         for x, y, w, h in rects:
             # crop a frame slightly larger than the face
-            y0, y1 = int(y - 0.5*h), int(y + 3.5*h)
-            x0, x1 = int(x - 0.5*w), int(x + 1.5*w)
+            y0, y1 = int(y - 0.25*h), int(y + 0.75*h)
+            x0, x1 = x, x + w
 
             # give up if the cropped frame would be out-of-bounds
-            if x0 < 0 or y0 < 0 or x1 > frame_w or y1 > frame_h:
+            if x0 < 0 or y0 < 0:
                 continue
 
             # apply code that inputted into interactive prompt earlier
