@@ -3,8 +3,8 @@ import numpy as np
 
 
 def main():
-    face = cv2.imread('child.jpg')
-    mask = cv2.imread('dog.jpg')
+    face = cv2.imread('images/child.jpg')
+    mask = cv2.imread('images/dog.jpg')
 
     mask_h, mask_w, _ = mask.shape
     face_h, face_w, _ = face.shape
