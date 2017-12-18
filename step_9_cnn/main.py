@@ -1,5 +1,8 @@
 """
 Sample convolutional neural network for Face Emotion Recognition 2013 Dataset
+
+The following neural network assumes that there are only 3 emotions in the
+dataset. See `data.py` for utility that filters out all but 3 emotions.
 """
 
 from utils import Fer2013Dataset
@@ -96,6 +99,18 @@ def train(
                 status_update(outputs, labels)
 
 
+def get_image_to_emotion_predictor(model_path='model_best.pth'):
+    """Returns predictor, from image to emotion index."""
+    net = Net().float()
+    pretrained_model = torch.load(model_path)
+    net.load_state_dict(pretrained_model['state_dict'])
+
+    def predictor(images: np.array):
+        """Translates images into emotion indices."""
+        return np.argmax(net(images).data.numpy(), axis=1)
+    return predictor
+
+
 def main():
     """Main script for Face Emotion Recognition 2013 dataset neural network"""
     args = argparse.ArgumentParser('Main training script for FER 2013')
@@ -115,8 +130,8 @@ def main():
 
     if args.action == 'train':
         train(net, trainset, testset, pretrained_model)
+        print('=' * 10, 'Finished Training', '=' * 10)
 
-    print('=' * 10, 'Finished Training', '=' * 10)
     train_acc = evaluate(net(trainset.X), trainset.Y)
     print('Training accuracy: %.3f' % train_acc)
     test_acc = evaluate(net(testset.X), testset.Y)

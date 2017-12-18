@@ -1,3 +1,10 @@
+"""
+Convolutional neural network for Face Emotion Recognition (FER) 2013 Dataset
+
+Utility for loading FER into PyTorch. Dataset curated by Pierre-Luc Carrier
+and Aaron Courville in 2013.
+"""
+
 from torch.utils.data import Dataset
 from torch.autograd import Variable
 import torch
