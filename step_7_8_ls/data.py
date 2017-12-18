@@ -15,6 +15,7 @@ with open('fer2013/fer2013.csv') as f:
         y = int(row[0]) - 1
         if y not in (0, 3, 4):
             continue
+        y = {0: 0, 3: 1, 4: 2}[y]
         x = np.array(list(map(int, row[1].split())))
         X.append(x)
         Y.append(y)
