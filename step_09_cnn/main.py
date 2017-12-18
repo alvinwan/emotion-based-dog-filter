@@ -12,6 +12,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 import numpy as np
 import torch
+import cv2
 import argparse
 
 
@@ -134,9 +135,12 @@ def get_image_to_emotion_predictor(model_path='model_best.pth'):
     pretrained_model = torch.load(model_path)
     net.load_state_dict(pretrained_model['state_dict'])
 
-    def predictor(images: np.array):
+    def predictor(image: np.array):
         """Translates images into emotion indices."""
-        return np.argmax(net(images).data.numpy(), axis=1)
+        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        frame = cv2.resize(gray, (48, 48)).reshape((1, 1, 48, 48))
+        X = Variable(torch.from_numpy(frame)).float()
+        return np.argmax(net(X).data.numpy(), axis=1)[0]
     return predictor
 
 

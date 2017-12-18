@@ -39,6 +39,12 @@ def main():
 
     # load mask
     mask = cv2.imread('images/dog.jpg')
+    mask1 = cv2.imread('images/dalmation.jpg')
+    mask2 = cv2.imread('images/cat.jpg')
+    masks = (mask, mask1, mask2)
+
+    # get emotion predictor
+    predictor = get_image_to_emotion_predictor()
 
     # initialize front face classifier
     cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
@@ -68,6 +74,7 @@ def main():
                 continue
 
             # apply code that inputted into interactive prompt earlier
+            mask = masks[predictor(frame[y:y+h, x: x+w])]
             frame[y0: y1, x0: x1] = apply_mask(frame[y0: y1, x0: x1], mask)
 
         # Display the resulting frame

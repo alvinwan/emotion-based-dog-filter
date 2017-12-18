@@ -7,13 +7,14 @@ X = []
 Y = []
 Y_oh = []
 
-def one_hot(y, num_classes=6):
+def one_hot(y, num_classes=3):
     return np.eye(num_classes)[y]
 
 t0 = time.time()
 
 X_train, X_test = np.load('X_train.npy'), np.load('X_test.npy')
 Y_train, Y_test = np.load('Y_train.npy'), np.load('Y_test.npy')
+print(Y_train.shape)
 Y_oh_train, Y_oh_test = one_hot(Y_train), one_hot(Y_test)
 
 t1 = time.time()
