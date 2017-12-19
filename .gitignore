@@ -1,6 +1,7 @@
 *.npy
 *.tar
 .idea
+images/me
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

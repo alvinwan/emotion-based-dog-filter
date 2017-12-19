@@ -1,6 +1,4 @@
-from scipy.linalg import solve
 import numpy as np
-import csv
 import time
 
 X = []
