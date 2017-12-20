@@ -1,6 +1,5 @@
 src/data/*.npy
 src/data/fer2013
-*.npy
 *.tar
 .idea
 src/assets/me
