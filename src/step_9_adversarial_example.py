@@ -51,7 +51,7 @@ image = cv2.imread(
 inputs = Variable(torch.from_numpy(image).float())
 labels = Variable(torch.from_numpy(np.array([target_label])).long())
 
-for i in range(500):
+for i in range(2000):
     inputs.data.clamp_(0, 255)
     optimizer.zero_grad()
 
@@ -62,14 +62,17 @@ for i in range(500):
     optimizer.step()
 
     # print statistics
-    if i % 25 == 0:
+    if i % 100 == 0:
         print('loss: %.3f' % loss.data[0])
 
-    if np.argmax(net(inputs).data.numpy()) == target_label:
-        break
+    # if np.argmax(net(inputs).data.numpy()) == target_label:
+    #     break
 
 # print successful or not
-print(np.argmax(net(inputs).data.numpy()) == target_label)
+outputs = net(inputs).data.numpy()
+success = np.argmax(outputs) == target_label
+print('Adversarial example generation %s' % (
+    'successful' if success else 'failed'))
 
 # save r
 np.save('outputs/example_adversarial_r.npy', net.r.data.numpy())
@@ -78,3 +81,4 @@ np.save('outputs/example_adversarial_r.npy', net.r.data.numpy())
 inputs.data.clamp_(0, 255)
 image = inputs.data.numpy().reshape((48, 48, 1))
 cv2.imwrite('outputs/example_adversarial.png', image)
+print('Wrote adversarial example to outputs/example_adversarial.png')

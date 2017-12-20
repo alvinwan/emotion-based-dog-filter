@@ -150,8 +150,9 @@ def get_image_to_emotion_predictor(model_path='assets/model_best.pth'):
 
     def predictor(image: np.array):
         """Translates images into emotion indices."""
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-        frame = cv2.resize(gray, (48, 48)).reshape((1, 1, 48, 48))
+        if image.shape[2] > 1:
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        frame = cv2.resize(image, (48, 48)).reshape((1, 1, 48, 48))
         X = Variable(torch.from_numpy(frame)).float()
         return np.argmax(net(X).data.numpy(), axis=1)[0]
     return predictor
