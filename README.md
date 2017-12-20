@@ -2,7 +2,7 @@
 
 This repository includes all source code for the tutorial on DigitalOcean with the same title, including:
 - A real-time filter that adds dog masks to faces on a live feed.
-- A dog filter that responds to your emotions. (Couldn't find a pug mask, so I used a cat.) A beagle for smiling "happy", a beagle for frowning "sad", and a cat for dropped jaws "surprise".
+- A dog filter that responds to your emotions. (Couldn't find a pug mask, so I used a cat.) A generic dog for smiling "happy", a dalmation for frowning "sad", and a cat for dropped jaws "surprise".
 - Utilities used for portions of the tutorial, such as plotting and advesarial example generation.
 - Simple convolutional neural network written in PyTorch, with pretrained model.
 - Ordinary least squares and ridge regression models using randomized features.
