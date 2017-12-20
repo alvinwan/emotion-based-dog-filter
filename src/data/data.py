@@ -8,44 +8,59 @@ Keeps only 3 classes, where the new class indices are 0, 1, 2, respectively:
 5 - surprise
 """
 
-from scipy.linalg import solve
+import argparse
 import numpy as np
 import csv
 import time
 
-X = []
-Y = []
 
-t0 = time.time()
+def main():
+    args = argparse.ArgumentParser('Data conversion for Face Emotion '
+                                   'Recognition dataset')
+    args.add_argument('--max-n-train', type=int,
+                      help='Maximum number of training samples. Use this flag '
+                           'if you run into MemoryErrors')
+    args = args.parse_args()
 
-with open('fer2013/fer2013.csv') as f:
-    reader = csv.reader(f)
-    header = next(reader)
-    for i, row in enumerate(reader):
-        y = int(row[0])
-        if y not in (3, 4, 5):
-            continue
-        y -= 3
-        x = np.array(list(map(int, row[1].split())))
-        X.append(x)
-        Y.append(y)
+    X = []
+    Y = []
 
-t1 = time.time()
-print('Finished loading data:', t1 - t0)
+    t0 = time.time()
 
-n_train = int(len(X) * 0.8)
+    with open('fer2013/fer2013.csv') as f:
+        reader = csv.reader(f)
+        header = next(reader)
+        for i, row in enumerate(reader):
+            y = int(row[0])
+            if y not in (3, 4, 5):
+                continue
+            y -= 3
+            x = np.array(list(map(int, row[1].split())))
+            X.append(x)
+            Y.append(y)
 
-X_train, X_test = np.array(X[:n_train]), np.array(X[n_train:])
-Y_train, Y_test = np.array(Y[:n_train]), np.array(Y[n_train:])
+    t1 = time.time()
+    print('Finished loading data:', t1 - t0)
 
-np.save('X_train', X_train)
-print('Saved X_train %s' % str(X_train.shape))
-np.save('X_test', X_test)
-print('Saved X_test %s' % str(X_test.shape))
-np.save('Y_train', Y_train)
-print('Saved Y_train %s' % str(Y_train.shape))
-np.save('Y_test', Y_test)
-print('Saved Y_test %s' % str(Y_test.shape))
+    p = 0.8
+    n_val = int(len(X) * (1 - p))
+    n_train = min(int(len(X) * 0.8), args.max_n_train)
 
-t2 = time.time()
-print('Finished converting data')
+    X_train, X_test = np.array(X[:n_train]), np.array(X[-n_val:])
+    Y_train, Y_test = np.array(Y[:n_train]), np.array(Y[-n_val:])
+
+    np.save('X_train', X_train)
+    print('Saved X_train %s' % str(X_train.shape))
+    np.save('X_test', X_test)
+    print('Saved X_test %s' % str(X_test.shape))
+    np.save('Y_train', Y_train)
+    print('Saved Y_train %s' % str(Y_train.shape))
+    np.save('Y_test', Y_test)
+    print('Saved Y_test %s' % str(Y_test.shape))
+
+    t2 = time.time()
+    print('Finished converting data')
+
+
+if __name__ == '__main__':
+    main()

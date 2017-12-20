@@ -38,10 +38,10 @@ def main():
     cap = cv2.VideoCapture(0)
 
     # load mask
-    mask = cv2.imread('assets/dog.png')
+    mask0 = cv2.imread('assets/dog.png')
     mask1 = cv2.imread('assets/dalmation.png')
     mask2 = cv2.imread('assets/cat.png')
-    masks = (mask, mask1, mask2)
+    masks = (mask0, mask1, mask2)
 
     # get emotion predictor
     predictor = get_image_to_emotion_predictor()

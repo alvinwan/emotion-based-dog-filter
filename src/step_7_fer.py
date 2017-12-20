@@ -67,11 +67,24 @@ class Fer2013Dataset(Dataset):
         return {'image': self._samples[idx], 'label': self._labels[idx]}
 
 
-def evaluate(outputs: Variable, labels: Variable) -> float:
+def evaluate(outputs: Variable, labels: Variable, normalized: bool=True
+             ) -> float:
     """Evaluate neural network outputs against non-one-hotted labels."""
     Y = labels.data.numpy()
     Yhat = np.argmax(outputs.data.numpy(), axis=1)
-    return float(np.sum(Yhat == Y) / Y.shape[0])
+    denom = Y.shape[0] if normalized else 1
+    return float(np.sum(Yhat == Y) / denom)
+
+
+def batch_evaluate(net: Net, dataset: Dataset, batch_size: int=500) -> float:
+    """Evaluate neural network in batches, if dataset is too large."""
+    score = 0.0
+    n = dataset.X.shape[0]
+    for i in range(0, n, batch_size):
+        x = dataset.X[i: i + batch_size]
+        y = dataset.Y[i: i + batch_size]
+        score += evaluate(net(x), y, False)
+    return score / n
 
 
 def save_state(epoch: int, net: Net, optimizer):
@@ -150,6 +163,9 @@ def main():
     args.add_argument('action', choices=('train', 'eval'),
                       help='Script utility to invoke')
     args.add_argument('--model', help='Path to model to restore from.')
+    args.add_argument('--max-batch-size', default=500, type=int,
+                      help='Maximum number of samples to pass through network '
+                           'due to memory constraints')
     args = args.parse_args()
 
     trainset = Fer2013Dataset('data/X_train.npy', 'data/Y_train.npy')
@@ -169,9 +185,9 @@ def main():
                           'evaluating a random initialization. Use the --model'
                           'flag.')
 
-    train_acc = evaluate(net(trainset.X), trainset.Y)
+    train_acc = batch_evaluate(net, trainset, batch_size=args.max_batch_size)
     print('Training accuracy: %.3f' % train_acc)
-    test_acc = evaluate(net(testset.X), testset.Y)
+    test_acc = batch_evaluate(net, testset, batch_size=args.max_batch_size)
     print('Validation accuracy: %.3f' % test_acc)
 
 

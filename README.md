@@ -1,8 +1,15 @@
 # Adversarial Examples in Computer Vision: Building then Fooling an Emotion-Based Dog Filter
 
-This repository includes a dog filter that responds to your emotions. (Really, it's an "animal" filter. I couldn't find a mask for pugs, so I used a cat instead.) Specifically, it applies a standard dog mask for smiling, dalmation for frowns, and a cat for a big gaping mouth denoting surprise. All other source code for the tutorial at DigitalOcean can be found here, including utilities used for portions of the tutorial.
+This repository includes all source code for the tutorial on DigitalOcean with the same title, including:
+- A real-time filter that adds dog masks to faces on a live feed.
+- A dog filter that responds to your emotions. (Couldn't find a pug mask, so I used a cat.) A beagle for smiling "happy", a beagle for frowning "sad", and a cat for dropped jaws "surprise".
+- Utilities used for portions of the tutorial, such as plotting and advesarial example generation.
+- Simple convolutional neural network written in PyTorch, with pretrained model.
+- Ordinary least squares and ridge regression models using randomized features.
 
 created by [Alvin Wan](http://alvinwan.com), December 2017
+
+![GIF for working dog filter](https://i.imgur.com/dn4A4xj.gif)
 
 # Getting Started
 
