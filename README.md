@@ -9,7 +9,8 @@ This repository includes all source code for the tutorial on DigitalOcean with t
 
 created by [Alvin Wan](http://alvinwan.com), December 2017
 
-![GIF for working dog filter](https://i.imgur.com/dn4A4xj.gif)
+![step_8_emotion_dog_mask](https://user-images.githubusercontent.com/2068077/34196964-36383d58-e519-11e7-92dc-2d7c33ab29bd.gif)
+
 
 # Getting Started
 
