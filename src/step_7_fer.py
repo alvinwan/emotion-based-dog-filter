@@ -80,7 +80,7 @@ def save_state(epoch: int, net: Net, optimizer):
         'epoch': epoch + 1,
         'state_dict': net.state_dict(),
         'optimizer': optimizer.state_dict(),
-    }, 'checkpoint.pth')
+    }, 'outputs/checkpoint.pth')
 
 
 def train(
@@ -152,8 +152,8 @@ def main():
     args.add_argument('--model', help='Path to model to restore from.')
     args = args.parse_args()
 
-    trainset = Fer2013Dataset('X_train.npy', 'Y_train.npy')
-    testset = Fer2013Dataset('X_test.npy', 'Y_test.npy')
+    trainset = Fer2013Dataset('data/X_train.npy', 'data/Y_train.npy')
+    testset = Fer2013Dataset('data/X_test.npy', 'data/Y_test.npy')
     net = Net().float()
 
     pretrained_model = {}

@@ -1,18 +1,20 @@
+"""Ordinary least squares and ridge regression, using random featurization.
+
+Writes all performance results to `results.txt`
+"""
+
+
 import numpy as np
 import time
 
-X = []
-Y = []
-Y_oh = []
 
 def one_hot(y, num_classes=3):
     return np.eye(num_classes)[y]
 
 t0 = time.time()
 
-X_train, X_test = np.load('X_train.npy'), np.load('X_test.npy')
-Y_train, Y_test = np.load('Y_train.npy'), np.load('Y_test.npy')
-print(Y_train.shape)
+X_train, X_test = np.load('data/X_train.npy'), np.load('data/X_test.npy')
+Y_train, Y_test = np.load('data/Y_train.npy'), np.load('data/Y_test.npy')
 Y_oh_train, Y_oh_test = one_hot(Y_train), one_hot(Y_test)
 
 t1 = time.time()
@@ -68,7 +70,7 @@ for d in ds:
     print('Total time:', t4 - t0)
 
 
-with open('results.txt', 'w') as f:
+with open('outputs/results.txt', 'w') as f:
     f.write('ols,train,%s\n' % ' '.join(map(str, ols_train_accuracies)))
     f.write('ols,test,%s\n' % ' '.join(map(str, ols_test_accuracies)))
     f.write('ridge,train,%s\n' % ' '.join(map(str, ridge_train_accuracies)))

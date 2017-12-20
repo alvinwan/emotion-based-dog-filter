@@ -8,25 +8,24 @@ created by [Alvin Wan](http://alvinwan.com), December 2017
 
 If you want to forego the tutorial and just try these applications out:
 
-1. Start by installing [PyTorch](http://pytorch.org).
+1. [Setup a Python virtual environment](https://www.digitalocean.com/community/tutorials/common-python-tools-using-virtualenv-installing-with-pip-and-managing-packages#a-thorough-virtualenv-how-to) with Python 3.6.
 
-2. Install all Python dependencies.
+2. Start by installing [PyTorch](http://pytorch.org).
+
+3. Install all Python dependencies.
 
 ```
 pip install -r requirements.txt
 ```
 
-To use the **emotion dog filter**, navigate to to the step 10 directory, and launch the script.
+4. To use the emotion dog filter, navigate into `src`:
 
 ```
-cd step_10_emotion_dog_filter
-python dog_emotion_mask.py
+cd src
 ```
 
-To use the **face authenticator**, you'll need to follow the original article, for the authenticator to work for your face. If, for whatever reason, you'd like to run the face authenticator for *my* face, navigate to the step 11 directory and launch.
+5. Launch the final script.
 
 ```
-cd step_11_transfer_learning
-python face_authenticate.py
+python step_8_dog_emotion_mask.py
 ```
-

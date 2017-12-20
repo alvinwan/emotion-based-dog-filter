@@ -1,5 +1,5 @@
 """
-Convolutional neural network for face authentication
+Convolutional neural network for Face Emotion Recognition (FER) 2013 Dataset
 """
 
 from torch.utils.data import Dataset
@@ -9,16 +9,18 @@ import torch.nn.functional as F
 import torch.optim as optim
 import torch
 import numpy as np
-import cv2
 
 
-class MeDataset(Dataset):
-    """Me dataset.
+class Fer2013Dataset(Dataset):
+    """Face Emotion Recognition dataset.
+
+    Utility for loading FER into PyTorch. Dataset curated by Pierre-Luc Carrier
+    and Aaron Courville in 2013.
 
     Each sample is 1 x 1 x 48 x 48, and each label is a scalar.
     """
 
-    def __init__(self, sample_path: str, label_path: str, transform=None):
+    def __init__(self, sample_path: str, label_path: str):
         """
         Args:
             sample_path: Path to `.npy` file containing samples nxd.
@@ -30,25 +32,19 @@ class MeDataset(Dataset):
 
         self.X = Variable(torch.from_numpy(self._samples)).float()
         self.Y = Variable(torch.from_numpy(self._labels)).float()
-        self.transform = transform
 
     def __len__(self):
         return len(self._labels)
 
     def __getitem__(self, idx):
-        image = self._samples[idx]
-        if self.transform:
-            image = self.transform(image)
-        return {'image': image, 'label': self._labels[idx]}
+        return {'image': self._samples[idx], 'label': self._labels[idx]}
 
 
-def transform_train(image):
-    # if np.random.random() > 0.5:
-    #     image = cv2.flip(image.reshape(48, 48), 1).reshape(1, 48, 48).astype(np.int64)
-    return image
+trainset = Fer2013Dataset('data/X_train.npy', 'data/Y_train.npy')
+trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)
 
-trainset = MeDataset('me_X_train.npy', 'me_Y_train.npy', transform=transform_train)
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=10)
+testset = Fer2013Dataset('data/X_test.npy', 'data/Y_test.npy')
+testloader = torch.utils.data.DataLoader(testset, batch_size=32, shuffle=False)
 
 
 class Net(nn.Module):
@@ -78,16 +74,7 @@ criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
 
 
-pretrained_model = torch.load('model_best.pth')
-net.load_state_dict(pretrained_model['state_dict'])
-
-for param in net.parameters():
-    param.requires_grad = False
-net.fc3 = nn.Linear(48, 2)
-
-Y = trainset.Y.data.numpy().astype(np.int)
-
-for epoch in range(5):  # loop over the dataset multiple times
+for epoch in range(2):  # loop over the dataset multiple times
 
     running_loss = 0.0
     for i, data in enumerate(trainloader, 0):
@@ -103,19 +90,5 @@ for epoch in range(5):  # loop over the dataset multiple times
 
         # print statistics
         running_loss += loss.data[0]
-        Yhat = np.argmax(net(trainset.X).data.numpy(), axis=1)
-        train_acc = float(np.sum(Yhat == Y) / Y.shape[0])
-        print('[%d, %5d] loss: %.3f train acc %.3f' % (
-            epoch, i, running_loss / (i + 1), train_acc))
-
-# data = next(iter(trainloader))
-# inputs = Variable(data['image'].float())
-# labels = Variable(data['label'].long())
-# print(inputs[0][0][0][:10])
-# outputs = net(inputs)
-# X = outputs.data.numpy()
-
-# w = np.linalg.pinv(X.T.dot(X)).dot(X.T).dot(np.eye(2)[np.ravel(Y)])
-# Yhat = np.argmax(X.dot(w), 1)
-# train_acc = float(np.sum(Yhat == Y) / Y.shape[0])
-# print(train_acc)
+        if i % 100 == 0:
+            print('[%d, %5d] loss: %.3f' % (epoch, i, running_loss / (i + 1)))

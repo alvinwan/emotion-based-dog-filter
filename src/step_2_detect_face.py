@@ -12,9 +12,10 @@ def main():
     cap = cv2.VideoCapture(0)
 
     # (NEW) initialize front face classifier
-    cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+    cascade = cv2.CascadeClassifier(
+        "assets/haarcascade_frontalface_default.xml")
 
-    while(True):
+    while True:
         # Capture frame-by-frame
         ret, frame = cap.read()
 

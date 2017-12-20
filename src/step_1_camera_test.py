@@ -10,7 +10,7 @@ import cv2
 def main():
     cap = cv2.VideoCapture(0)
 
-    while(True):
+    while True:
         # Capture frame-by-frame
         ret, frame = cap.read()
 

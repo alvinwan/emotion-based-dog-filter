@@ -6,7 +6,6 @@ With the test frame in focus, hit `q` to exit.
 i.e., Typing `q` into your terminal will do nothing.
 """
 
-from main import get_image_to_emotion_predictor
 import numpy as np
 import cv2
 
@@ -38,16 +37,11 @@ def main():
     cap = cv2.VideoCapture(0)
 
     # load mask
-    mask = cv2.imread('images/dog.jpg')
-    mask1 = cv2.imread('images/dalmation.jpg')
-    mask2 = cv2.imread('images/cat.jpg')
-    masks = (mask, mask1, mask2)
-
-    # get emotion predictor
-    predictor = get_image_to_emotion_predictor()
+    mask = cv2.imread('assets/dog.jpg')
 
     # initialize front face classifier
-    cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
+    cascade = cv2.CascadeClassifier(
+        "assets/haarcascade_frontalface_default.xml")
 
     while(True):
         # Capture frame-by-frame
@@ -74,7 +68,6 @@ def main():
                 continue
 
             # apply code that inputted into interactive prompt earlier
-            mask = masks[predictor(frame[y:y+h, x: x+w])]
             frame[y0: y1, x0: x1] = apply_mask(frame[y0: y1, x0: x1], mask)
 
         # Display the resulting frame

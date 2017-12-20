@@ -1,9 +1,9 @@
-data/*.npy
-data/fer2013
+src/data/*.npy
+src/data/fer2013
 *.npy
 *.tar
 .idea
-images/me
+src/assets/me
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
