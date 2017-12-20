@@ -129,7 +129,7 @@ def train(
                 status_update(outputs, labels)
 
 
-def get_image_to_emotion_predictor(model_path='model_best.pth'):
+def get_image_to_emotion_predictor(model_path='assets/model_best.pth'):
     """Returns predictor, from image to emotion index."""
     net = Net().float()
     pretrained_model = torch.load(model_path)
@@ -164,6 +164,10 @@ def main():
     if args.action == 'train':
         train(net, trainset, testset, pretrained_model)
         print('=' * 10, 'Finished Training', '=' * 10)
+    elif not args.model:
+        raise UserWarning('Need a model to evaluate! Otherwise, you would be '
+                          'evaluating a random initialization. Use the --model'
+                          'flag.')
 
     train_acc = evaluate(net(trainset.X), trainset.Y)
     print('Training accuracy: %.3f' % train_acc)
