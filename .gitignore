@@ -1,3 +1,5 @@
+data/*.npy
+data/fer2013
 *.npy
 *.tar
 .idea
