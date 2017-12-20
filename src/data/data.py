@@ -1,3 +1,13 @@
+"""Data conversion script, from csv to numpy files.
+
+Face Emotion Recognition dataset by Pierre-Luc Carrier and Aaron Courville
+
+Keeps only 3 classes, where the new class indices are 0, 1, 2, respectively:
+3 - happy
+4 - sad
+5 - surprise
+"""
+
 from scipy.linalg import solve
 import numpy as np
 import csv

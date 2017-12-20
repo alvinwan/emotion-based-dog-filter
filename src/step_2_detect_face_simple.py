@@ -4,7 +4,7 @@ import cv2
 
 
 def main():
-    frame = cv2.imread('assets/children.jpg')
+    frame = cv2.imread('assets/children.png')
 
     # initialize front face classifier
     cascade = cv2.CascadeClassifier(
@@ -21,7 +21,7 @@ def main():
     for x, y, w, h in rects:
         cv2.rectangle(frame, (x, y), (x + w, y + h), (0, 255, 0), 2)
 
-    cv2.imwrite('outputs/children_detected.jpeg', frame)
+    cv2.imwrite('outputs/children_detected.png', frame)
 
 if __name__ == '__main__':
     main()

@@ -17,4 +17,4 @@ array = np.array([
 
 larger = cv2.resize(array, None, fx=60, fy=60, interpolation=cv2.INTER_AREA)
 
-cv2.imwrite('outputs/diamond.jpg', larger)
+cv2.imwrite('outputs/diamond.png', larger)

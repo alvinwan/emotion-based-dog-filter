@@ -4,6 +4,7 @@ src/data/fer2013
 *.tar
 .idea
 src/assets/me
+src/outputs/*.pth
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

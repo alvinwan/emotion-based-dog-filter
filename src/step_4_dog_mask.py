@@ -37,7 +37,7 @@ def main():
     cap = cv2.VideoCapture(0)
 
     # load mask
-    mask = cv2.imread('assets/dog.jpg')
+    mask = cv2.imread('assets/dog.png')
 
     # initialize front face classifier
     cascade = cv2.CascadeClassifier(
