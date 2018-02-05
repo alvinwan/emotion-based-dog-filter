@@ -18,6 +18,7 @@ def main():
     args = argparse.ArgumentParser('Data conversion for Face Emotion '
                                    'Recognition dataset')
     args.add_argument('--max-n-train', type=int,
+                      default=np.inf,
                       help='Maximum number of training samples. Use this flag '
                            'if you run into MemoryErrors')
     args = args.parse_args()
@@ -49,17 +50,21 @@ def main():
     X_train, X_test = np.array(X[:n_train]), np.array(X[-n_val:])
     Y_train, Y_test = np.array(Y[:n_train]), np.array(Y[-n_val:])
 
-    np.save('X_train', X_train)
+    np.savez_compressed(
+        'fer2013_train',
+        X=X_train,
+        Y=Y_train)
     print('Saved X_train %s' % str(X_train.shape))
-    np.save('X_test', X_test)
-    print('Saved X_test %s' % str(X_test.shape))
-    np.save('Y_train', Y_train)
     print('Saved Y_train %s' % str(Y_train.shape))
-    np.save('Y_test', Y_test)
+    np.savez_compressed(
+        'fer2013_test',
+        X=X_test,
+        Y=Y_test)
+    print('Saved X_test %s' % str(X_test.shape))
     print('Saved Y_test %s' % str(Y_test.shape))
 
     t2 = time.time()
-    print('Finished converting data')
+    print('Finished converting data', t2 - t1)
 
 
 if __name__ == '__main__':

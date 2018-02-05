@@ -11,8 +11,11 @@ def evaluate(A, Y, w):
     return float(np.sum(Yhat == Y)) / Y.shape[0]
 
 # load data
-X_train, X_test = np.load('data/X_train.npy'), np.load('data/X_test.npy')
-Y_train, Y_test = np.load('data/Y_train.npy'), np.load('data/Y_test.npy')
+with np.load('data/fer2013_train.npz') as data:
+    X_train, X_test = data['X'], data['Y']
+
+with np.load('data/fer2013_test.npz') as data:
+    Y_train, Y_test = data['X'], data['Y']
 
 # one-hot labels
 I = np.eye(3)

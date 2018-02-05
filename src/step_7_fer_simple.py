@@ -20,14 +20,14 @@ class Fer2013Dataset(Dataset):
     Each sample is 1 x 1 x 48 x 48, and each label is a scalar.
     """
 
-    def __init__(self, sample_path: str, label_path: str):
+    def __init__(self, path: str):
         """
         Args:
-            sample_path: Path to `.npy` file containing samples nxd.
-            label_path: Path to `.npy` file containign labels nx1.
+            path: Path to `.np` file containing sample nxd and label nx1
         """
-        self._samples = np.load(sample_path)
-        self._labels = np.load(label_path)
+        with np.load(path) as data:
+            self._samples = data['X']
+            self._labels = data['Y']
         self._samples = self._samples.reshape((-1, 1, 48, 48))
 
         self.X = Variable(torch.from_numpy(self._samples)).float()
@@ -40,10 +40,10 @@ class Fer2013Dataset(Dataset):
         return {'image': self._samples[idx], 'label': self._labels[idx]}
 
 
-trainset = Fer2013Dataset('data/X_train.npy', 'data/Y_train.npy')
+trainset = Fer2013Dataset('data/fer2013_train.npz')
 trainloader = torch.utils.data.DataLoader(trainset, batch_size=32, shuffle=True)
 
-testset = Fer2013Dataset('data/X_test.npy', 'data/Y_test.npy')
+testset = Fer2013Dataset('data/fer2013_test.npz')
 testloader = torch.utils.data.DataLoader(testset, batch_size=32, shuffle=False)
 
 

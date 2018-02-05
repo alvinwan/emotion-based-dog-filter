@@ -11,7 +11,7 @@ import cv2
 
 
 def apply_mask(face: np.array, mask: np.array) -> np.array:
-    """Add the mask to the provided face."""
+    """Add the mask to the provided face, and return the face with mask."""
     mask_h, mask_w, _ = mask.shape
     face_h, face_w, _ = face.shape
 

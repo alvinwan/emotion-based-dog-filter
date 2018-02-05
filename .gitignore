@@ -1,4 +1,4 @@
-src/data/*.npy
+src/data/*.npz
 src/data/fer2013
 *.tar
 .idea
