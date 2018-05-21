@@ -40,7 +40,7 @@ def main():
     # load mask
     mask0 = cv2.imread('assets/dog.png')
     mask1 = cv2.imread('assets/dalmation.png')
-    mask2 = cv2.imread('assets/cat.png')
+    mask2 = cv2.imread('assets/sheepdog.png')
     masks = (mask0, mask1, mask2)
 
     # get emotion predictor
