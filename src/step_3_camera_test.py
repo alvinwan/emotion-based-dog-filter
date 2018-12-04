@@ -1,5 +1,7 @@
 """Test for video camera.
 
+(No longer used in the tutorial)
+
 With the test frame in focus, hit `q` to exit.
 i.e., Typing `q` into your terminal will do nothing.
 """

@@ -1,4 +1,7 @@
-"""Generate image from array of numbers."""
+"""Generate image from array of numbers.
+
+(Script not mentioned in tutorial)
+"""
 
 import numpy as np
 import cv2

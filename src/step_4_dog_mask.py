@@ -64,7 +64,7 @@ def main():
             x0, x1 = x, x + w
 
             # give up if the cropped frame would be out-of-bounds
-            if x0 < 0 or y0 < 0:
+            if x0 < 0 or y0 < 0 or x1 > frame_w or y1 > frame_h:
                 continue
 
             # apply code that inputted into interactive prompt earlier
