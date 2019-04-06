@@ -1,6 +1,6 @@
-# Adversarial Examples in Computer Vision: Building then Fooling an Emotion-Based Dog Filter
+# [How To Apply Computer Vision to Build an Emotion-Based Dog Filter in Python 3](https://www.digitalocean.com/community/tutorials/how-to-apply-computer-vision-to-build-an-emotion-based-dog-filter-in-python-3)
 
-This repository includes all source code for the tutorial on DigitalOcean with the same title, including:
+This repository includes all source code for the [tutorial on DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-apply-computer-vision-to-build-an-emotion-based-dog-filter-in-python-3) with the same title, including:
 - A real-time filter that adds dog masks to faces on a live feed.
 - A dog filter that responds to your emotions. (Couldn't find a pug mask, so I used a cat.) A generic dog for smiling "happy", a dalmation for frowning "sad", and a cat for dropped jaws "surprise".
 - Utilities used for portions of the tutorial, such as plotting and advesarial example generation.
