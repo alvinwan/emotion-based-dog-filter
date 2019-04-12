@@ -1,6 +1,6 @@
 # [How To Apply Computer Vision to Build an Emotion-Based Dog Filter in Python 3](https://www.digitalocean.com/community/tutorials/how-to-apply-computer-vision-to-build-an-emotion-based-dog-filter-in-python-3)
 
-**Want an in-person tutorial with step-by-step walkthroughs and explanations? See the corresponding AirBnb experience for both beginner and experienced coders alike, at ["Build AI Bots for Games"](https://abnb.me/IRlSoFrOUO)**
+**Want an in-person tutorial with step-by-step walkthroughs and explanations? See the corresponding AirBnb experience for both beginner and experienced coders alike, at ["Build a Dog Filter with Computer Vision"](abnb.me/GFEpWpfUlO)**
 
 This repository includes all source code for the [tutorial on DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-apply-computer-vision-to-build-an-emotion-based-dog-filter-in-python-3) with the same title, including:
 - A real-time filter that adds dog masks to faces on a live feed.
@@ -14,6 +14,8 @@ created by [Alvin Wan](http://alvinwan.com), December 2017
 ![step_8_emotion_dog_mask](https://user-images.githubusercontent.com/2068077/34196964-36383d58-e519-11e7-92dc-2d7c33ab29bd.gif)
 
 # Getting Started
+
+> You can setup the repository using Python or view the web demo at [dogfilter.alvinwan.com](https://dogfilter.alvinwan.com)
 
 For complete step-by-step instructions, see the [tutorial on DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-apply-computer-vision-to-build-an-emotion-based-dog-filter-in-python-3). This codebase was developed and tested using `Python 3.6`. If you're familiar with Python, then see the below to skip the tutorial and get started quickly:
 
